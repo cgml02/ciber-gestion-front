@@ -1,1 +1,26 @@
 /* You can add global styles to this file, and also import other style files */
+@import "../node_modules/h8k-design/lib/index.scss";
+
+h1 {
+  font-weight: 200;
+  font-size: 25px;
+  text-align: center;
+}
+
+h2 {
+  font-weight: 100;
+  font-size: 15px;
+  text-align: center;
+  color: #006400;
+}
+
+a {
+  font-weight: 100;
+  font-size: 15px;
+  text-align: center;
+  color: #006400;
+}
+
+a:hover {
+  color: #005200;
+}

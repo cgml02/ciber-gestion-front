@@ -1,0 +1,90 @@
+<div class="container">
+  <div class="centered-div">
+    <div class="alert error" *ngIf="isWrong">
+      Ya existe un usuario con ese email
+    </div>
+    <div class="card">
+      <section class="card-text">
+        <h1>Registrarse</h1>
+        <h2>Regístrate a nuestro portal de NPS</h2>
+        <form [formGroup]="loginForm" (ngSubmit)="signUp()">
+          <div class="form-group">
+            <label for="login__email">Nombre(s):</label>
+            <input type="text" id="login__name" formControlName="name" />
+            <div
+              *ngIf="name?.invalid && (name?.dirty || name?.touched)"
+              id="login__name-error"
+              class="error-message"
+            >
+              <div *ngIf="(name?.errors)!['required']">
+                El nombre es requerido.
+              </div>
+            </div>
+          </div>
+          <div class="form-group">
+            <label for="login__email">Apellido(s):</label>
+            <input
+              type="text"
+              id="login__lastName"
+              formControlName="lastName"
+            />
+            <div
+              *ngIf="
+                lastName?.invalid && (lastName?.dirty || lastName?.touched)
+              "
+              id="login__lastName-error"
+              class="error-message"
+            >
+              <div *ngIf="(lastName?.errors)!['required']">
+                El apellido es requerido.
+              </div>
+            </div>
+          </div>
+          <div class="form-group">
+            <label for="login__email">Email:</label>
+            <input type="email" id="login__email" formControlName="email" />
+            <div
+              *ngIf="email?.invalid && (email?.dirty || email?.touched)"
+              id="login__email-error"
+              class="error-message"
+            >
+              <div *ngIf="(email?.errors)!['required']">
+                El email es requerido.
+              </div>
+            </div>
+          </div>
+          <div class="form-group">
+            <label for="login__password">Contraseña:</label>
+            <input
+              type="password"
+              id="login__password"
+              formControlName="password"
+            />
+            <div
+              *ngIf="
+                password?.invalid && (password?.dirty || password?.touched)
+              "
+              id="login__password-error"
+              class="error-message"
+            >
+              <div *ngIf="(password?.errors)!['required']">
+                La contraseña es requerida.
+              </div>
+              <div *ngIf="(password?.errors)!['minlength']">
+                El mínimo de caracteres es de 8.
+              </div>
+            </div>
+          </div>
+          <h2>
+            ¿Ya tienes una cuenta? <a (click)="logIn()">Inicia sesión.</a>
+          </h2>
+          <section class="card-actions">
+            <button type="submit" id="login__btn-login" (click)="signUp()">
+              Crear
+            </button>
+          </section>
+        </form>
+      </section>
+    </div>
+  </div>
+</div>
