@@ -50,13 +50,10 @@ export class LoginComponent implements OnInit {
     const email = this.email?.value;
     const password = this.password?.value;
 
-    // Pruebas
-    localStorage.setItem('token', email!);
-    this.redirectUsers();
-
-    if (email == 'test@test.com' && password == '123') {
+    if (email && password) {
       this.userLogin.execute({ email, password }).subscribe(
         () => {
+          localStorage.setItem('token', email);
           this.redirectUsers();
         },
         (error) => {
@@ -70,11 +67,11 @@ export class LoginComponent implements OnInit {
         }
       );
     } else {
-      //Swal.fire({
-      //  icon: 'error',
-      //  title: 'Error',
-      //  text: 'Por favor, proporcione un email y una contraseña válidos.',
-      //});
+      Swal.fire({
+        icon: 'error',
+        title: 'Error',
+        text: 'Por favor, proporcione un email y una contraseña válidos.',
+      });
     }
   }
 }

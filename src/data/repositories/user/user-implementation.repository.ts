@@ -6,6 +6,7 @@ import { UserImplementationRepositoryMapper } from './mappers/user-repository.ma
 import { UserRepository } from '../../../domain/repositories/user.repository';
 import { UserModel } from '../../../domain/models/user.model';
 import { UserEntity } from './entities/user-entity';
+import { environment } from '../../../enviroments/environment';
 
 @Injectable({
   providedIn: 'root',
@@ -19,18 +20,18 @@ export class UserImplementationRepository extends UserRepository {
 
   login(params: { email: string; password: string }): Observable<UserModel> {
     return this.http
-      .post<UserEntity>('url', { params })
+      .post<UserEntity>(environment.apiUrl + 'user/login', params)
       .pipe(map(this.userMapper.mapFrom));
   }
 
   register(params: {
-    name: string;
+    firstName: string;
     lastName: string;
     email: string;
     password: string;
   }): Observable<UserModel> {
     return this.http
-      .post<UserEntity>('url', { params })
+      .post<UserEntity>(environment.apiUrl + 'user/signup', params)
       .pipe(map(this.userMapper.mapFrom));
   }
 }

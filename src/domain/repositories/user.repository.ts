@@ -8,7 +8,7 @@ export abstract class UserRepository {
   }): Observable<UserModel>;
 
   abstract register(params: {
-    name: string;
+    firstName: string;
     lastName: string;
     email: string;
     password: string;

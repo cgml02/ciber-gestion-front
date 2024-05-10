@@ -57,28 +57,36 @@ export class SignupComponent implements OnInit {
   }
 
   async signUp() {
-    const name = this.name?.value;
+    const firstName = this.name?.value;
     const lastName = this.lastName?.value;
     const email = this.email?.value;
     const password = this.password?.value;
 
-    if (name && lastName && email && password) {
-      this.userRegister.execute({ name, lastName, email, password }).subscribe(
-        (registeredUser) => {
-          Swal.fire({
-            icon: 'success',
-            title: 'Registro exitoso',
-            text: `Usuario ${registeredUser.firstName} ${registeredUser.lastName} registrado exitosamente!`,
-          });
-        },
-        (error) => {
-          Swal.fire({
-            icon: 'error',
-            title: 'Error durante el registro de usuario',
-            text: error.message || 'Ha ocurrido un error durante el registro de usuario.',
-          });
-        }
-      );
+    if (firstName && lastName && email && password) {
+      this.userRegister
+        .execute({ firstName, lastName, email, password })
+        .subscribe(
+          () => {
+            Swal.fire({
+              icon: 'success',
+              title: 'Registro exitoso',
+              text: `Usuario registrado exitosamente!`,
+            }).then((result) => {
+              if (result.isConfirmed) {
+                this.logIn();
+              }
+            });
+          },
+          (error) => {
+            Swal.fire({
+              icon: 'error',
+              title: 'Error durante el registro de usuario',
+              text:
+                error.message ||
+                'Ha ocurrido un error durante el registro de usuario.',
+            });
+          }
+        );
     } else {
       Swal.fire({
         icon: 'error',

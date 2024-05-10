@@ -8,8 +8,8 @@ export class UserImplementationRepositoryMapper extends Mapper<
 > {
   mapFrom(param: UserEntity): UserModel {
     return {
-      userId: param.userId,
-      profileId: param.fk_profileId,
+      userId: param.id,
+      profileId: param.profileId,
       firstName: param.firstName,
       lastName: param.lastName,
       email: param.email,
@@ -19,8 +19,8 @@ export class UserImplementationRepositoryMapper extends Mapper<
   }
   mapTo(param: UserModel): UserEntity {
     return {
-      userId: param.userId,
-      fk_profileId: param.profileId,
+      id: param.userId,
+      profileId: param.profileId,
       firstName: param.firstName,
       lastName: param.lastName,
       email: param.email,

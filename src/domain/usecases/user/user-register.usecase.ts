@@ -6,14 +6,14 @@ import { UseCase } from '../../../base/use-case';
 export class UserRegisterUseCase
   implements
     UseCase<
-      { name: string; lastName: string; email: string; password: string },
+      { firstName: string; lastName: string; email: string; password: string },
       UserModel
     >
 {
   constructor(private userRepository: UserRepository) {}
 
   execute(params: {
-    name: string;
+    firstName: string;
     lastName: string;
     email: string;
     password: string;

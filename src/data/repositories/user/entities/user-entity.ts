@@ -1,6 +1,6 @@
 export interface UserEntity {
-  userId: string;
-  fk_profileId: number;
+  id: string;
+  profileId: number;
   firstName: string;
   lastName: string;
   email: string;
