@@ -5,12 +5,17 @@
     </div>
     <div class="card">
       <section class="card-text">
-        <h1>Inicia sesión</h1>
+        <h1>Iniciar sesión</h1>
         <h2>Ingresa a nuestro portal de NPS</h2>
         <form [formGroup]="loginForm" (ngSubmit)="logIn()">
           <div class="form-group">
             <label for="login__email">Email:</label>
-            <input type="email" id="login__email" formControlName="email" />
+            <input
+              type="email"
+              id="login__email"
+              formControlName="email"
+              pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$"
+            />
             <div
               *ngIf="email?.invalid && (email?.dirty || email?.touched)"
               id="login__email-error"
@@ -18,6 +23,9 @@
             >
               <div *ngIf="(email?.errors)!['required']">
                 El email es requerido.
+              </div>
+              <div *ngIf="(email?.errors)!['email']">
+                El email no es válido.
               </div>
             </div>
           </div>
@@ -37,9 +45,6 @@
             >
               <div *ngIf="(password?.errors)!['required']">
                 La contraseña es requerida.
-              </div>
-              <div *ngIf="(password?.errors)!['minlength']">
-                El mínimo de caracteres es de 8.
               </div>
             </div>
           </div>

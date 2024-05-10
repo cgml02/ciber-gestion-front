@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
+import { UserLoginUseCase } from '../../../../domain/usecases/user/user-login.usecase';
+import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-login',
@@ -10,11 +12,15 @@ import { Router } from '@angular/router';
 export class LoginComponent implements OnInit {
   isWrong = false;
 
-  constructor(private readonly router: Router, private fb: FormBuilder) {}
+  constructor(
+    private readonly router: Router,
+    private fb: FormBuilder,
+    private userLogin: UserLoginUseCase
+  ) {}
 
   loginForm = this.fb.group({
     email: ['', [Validators.required, Validators.email]],
-    password: ['', [Validators.required, Validators.minLength(8)]],
+    password: ['', [Validators.required]],
   });
 
   get email() {
@@ -44,7 +50,31 @@ export class LoginComponent implements OnInit {
     const email = this.email?.value;
     const password = this.password?.value;
 
-    console.log(email);
-    console.log(password);
+    // Pruebas
+    localStorage.setItem('token', email!);
+    this.redirectUsers();
+
+    if (email == 'test@test.com' && password == '123') {
+      this.userLogin.execute({ email, password }).subscribe(
+        () => {
+          this.redirectUsers();
+        },
+        (error) => {
+          Swal.fire({
+            icon: 'error',
+            title: 'Error durante el inicio de sesión',
+            text:
+              error.message ||
+              'Ha ocurrido un error durante el inicio de sesión.',
+          });
+        }
+      );
+    } else {
+      //Swal.fire({
+      //  icon: 'error',
+      //  title: 'Error',
+      //  text: 'Por favor, proporcione un email y una contraseña válidos.',
+      //});
+    }
   }
 }

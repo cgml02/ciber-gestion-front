@@ -1,5 +1,6 @@
 /* You can add global styles to this file, and also import other style files */
 @import "../node_modules/h8k-design/lib/index.scss";
+@import "../node_modules/bootstrap-icons/font/bootstrap-icons.css";
 
 h1 {
   font-weight: 200;
@@ -18,9 +19,18 @@ a {
   font-weight: 100;
   font-size: 15px;
   text-align: center;
-  color: #006400;
+  color: #169c16;
 }
 
 a:hover {
-  color: #005200;
+  color: #169c16;
+}
+
+body {
+  background: url("./presentation/assets/fondo.avif") !important;
+}
+
+.swal2-styled {
+  background-color: var(--brand-color) !important;
+  box-shadow: 0 4px 12px var(--brand-box-shadow);
 }

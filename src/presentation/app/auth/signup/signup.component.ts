@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
+import { UserRegisterUseCase } from '../../../../domain/usecases/user/user-register.usecase';
+import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-signup',
@@ -10,11 +12,15 @@ import { Router } from '@angular/router';
 export class SignupComponent implements OnInit {
   isWrong = false;
 
-  constructor(private readonly router: Router, private fb: FormBuilder) {}
+  constructor(
+    private readonly router: Router,
+    private fb: FormBuilder,
+    private userRegister: UserRegisterUseCase
+  ) {}
 
   loginForm = this.fb.group({
-    name: ['', [Validators.required]],
-    lastName: ['', [Validators.required]],
+    name: ['', [Validators.required, Validators.minLength(3)]],
+    lastName: ['', [Validators.required, Validators.minLength(3)]],
     email: ['', [Validators.required, Validators.email]],
     password: ['', [Validators.required, Validators.minLength(8)]],
   });
@@ -56,9 +62,29 @@ export class SignupComponent implements OnInit {
     const email = this.email?.value;
     const password = this.password?.value;
 
-    console.log(name);
-    console.log(lastName);
-    console.log(email);
-    console.log(password);
+    if (name && lastName && email && password) {
+      this.userRegister.execute({ name, lastName, email, password }).subscribe(
+        (registeredUser) => {
+          Swal.fire({
+            icon: 'success',
+            title: 'Registro exitoso',
+            text: `Usuario ${registeredUser.firstName} ${registeredUser.lastName} registrado exitosamente!`,
+          });
+        },
+        (error) => {
+          Swal.fire({
+            icon: 'error',
+            title: 'Error durante el registro de usuario',
+            text: error.message || 'Ha ocurrido un error durante el registro de usuario.',
+          });
+        }
+      );
+    } else {
+      Swal.fire({
+        icon: 'error',
+        title: 'Error',
+        text: 'Por favor, complete todos los campos requeridos para registrarse.',
+      });
+    }
   }
 }
