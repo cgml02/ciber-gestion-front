@@ -1,1 +1,121 @@
 <app-nav-bar></app-nav-bar>
+
+<div class="container" *ngIf="isAdmin">
+  <div class="card">
+    <h1>¡Bienvenido admin!</h1>
+    <h2>A continuación se mostrarán la encuestas creadas:</h2>
+
+    <table id="user-list__table">
+      <thead>
+        <tr>
+          <th>#</th>
+          <th>Nombre Cuestionario</th>
+          <th>Ver Detalle</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr
+          *ngFor="let questionnaire of questionnaires; let i = index"
+          id="user-list__table-item-{{ i }}"
+        >
+          <td>{{ questionnaire.questionnaireId }}</td>
+          <td>{{ questionnaire.name }}</td>
+          <td>
+            <button
+              type="button"
+              *ngIf="!showDetail"
+              class="btn-lg btn-block"
+              (click)="showDetailTable(questionnaire.questionnaireId)"
+            >
+              Ver
+            </button>
+            <button
+              type="button"
+              *ngIf="showDetail"
+              class="btn-lg btn-block"
+              (click)="showDetailTable()"
+            >
+              Ocultar
+            </button>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+
+    <!--Admin-->
+    <table *ngIf="showDetail && isAdmin" id="detail-table">
+      <thead>
+        <tr>
+          <th>#</th>
+          <th>Clasificación</th>
+          <th>Puntuación Total</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr
+          *ngFor="let rule of ruleQuestionnaires; let i = index"
+          id="user-list__table-item-{{ i }}"
+        >
+          <td>{{ rule.ruleQuestionnaireId }}</td>
+          <td>{{ rule.classification }}</td>
+          <td>100</td>
+        </tr>
+        <tr class="detailNPS">
+          <td colspan="1"></td>
+          <td>Total NPS</td>
+          <td>100</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+
+<div class="container" *ngIf="!isAdmin">
+  <div class="card">
+    <h1>¡Bienvenido!</h1>
+    <h2>A continuación se mostrarán la encuestas pendientes por responder:</h2>
+
+    <table id="user-list__table">
+      <thead>
+        <tr>
+          <th>#</th>
+          <th>Nombre Cuestionario</th>
+          <th>Pregunta</th>
+          <th>Calificar</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr
+          *ngFor="let questionnaire of questionnaires; let i = index"
+          id="user-list__table-item-{{ i }}"
+        >
+          <td>{{ questionnaire.questionnaireId }}</td>
+          <td>{{ questionnaire.name }}</td>
+          <td>{{ questionnaire.question }}</td>
+          <td>
+            <div class="row">
+              <div class="col-6">
+                <select class="form-select" aria-label="Seleccionar">
+                  <option selected disabled>...</option>
+                  <option value="1">1</option>
+                  <option value="2">2</option>
+                  <option value="3">3</option>
+                  <option value="3">4</option>
+                  <option value="3">5</option>
+                  <option value="3">6</option>
+                  <option value="3">7</option>
+                  <option value="3">8</option>
+                  <option value="3">9</option>
+                  <option value="3">10</option>
+                </select>
+              </div>
+              <div class="col-6">
+                <button type="button" class="btn-lg">Enviar</button>
+              </div>
+            </div>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>
