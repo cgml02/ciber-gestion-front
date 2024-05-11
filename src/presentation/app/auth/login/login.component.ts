@@ -4,6 +4,7 @@ import { Router } from "@angular/router";
 import Swal from "sweetalert2";
 
 import { UserLoginUseCase } from "../../../../domain/usecases/user/user-login.usecase";
+import { AuthService } from "../../../../domain/services/auth.service";
 
 @Component({
     selector: "app-login",
@@ -17,7 +18,8 @@ export class LoginComponent implements OnInit {
     constructor(
         private readonly router: Router,
         private fb: FormBuilder,
-        private userLogin: UserLoginUseCase
+        private userLogin: UserLoginUseCase,
+        private authService: AuthService,
     ) {}
 
     loginForm = this.fb.group({
@@ -58,6 +60,7 @@ export class LoginComponent implements OnInit {
         if (email && password) {
             this.userLogin.execute({ email, password }).subscribe(
                 (response) => {
+                    this.authService.setUserInfo(response);
                     localStorage.setItem("token", email);
                     this.profileId = response.profileId;
                     this.redirectUsers(this.profileId);

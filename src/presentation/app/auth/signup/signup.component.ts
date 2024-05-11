@@ -12,6 +12,7 @@ import { UserRegisterUseCase } from "../../../../domain/usecases/user/user-regis
 })
 export class SignupComponent implements OnInit {
     isWrong = false;
+    isSigningUp: boolean = false;
 
     constructor(
         private readonly router: Router,
@@ -58,12 +59,17 @@ export class SignupComponent implements OnInit {
     }
 
     async signUp() {
+        if (this.isSigningUp) {
+            return;
+        }
+
         const firstName = this.name?.value;
         const lastName = this.lastName?.value;
         const email = this.email?.value;
         const password = this.password?.value;
 
         if (firstName && lastName && email && password) {
+            this.isSigningUp = true;
             this.userRegister
                 .execute({
                     firstName, lastName, email, password
@@ -90,6 +96,7 @@ export class SignupComponent implements OnInit {
                         });
                     }
                 );
+            this.isSigningUp = false;
         } else {
             Swal.fire({
                 icon: "error",

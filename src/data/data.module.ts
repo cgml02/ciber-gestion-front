@@ -15,6 +15,10 @@ import { ProfileImplementationRepository } from "./repositories/profile/profile-
 import { QuestionnaireImplementationRepository } from "./repositories/questionnaire/questionnaire-implementation.repository";
 import { RuleQuestionnaireImplementationRepository } from "./repositories/rule-questionnaire/rule-questionnaire-implementation.repository";
 import { UserImplementationRepository } from "./repositories/user/user-implementation.repository";
+import { UserQuestionnaireRepository } from "../domain/repositories/user-questionnaire.repository";
+import { UserQuestionnaireCreateUseCase } from "../domain/usecases/user-questionnaire/user-questionnaire-create.usecase";
+import { UserQuestionnaireImplementationRepository } from "./repositories/user-questionnaire/user-questionnaire-implementation.repository";
+import { UserQuestionnaireGetUseCase } from "../domain/usecases/user-questionnaire/user-questionnaire-get.usecase";
 
 const userLoginUseCaseFactory = (userRepo: UserRepository) => new UserLoginUseCase(userRepo);
 export const userLoginUseCaseProvider = {
@@ -51,6 +55,20 @@ export const getRuleQuestionnaireByQuestIdUseProvider = {
     deps: [RuleQuestionnaireRepository],
 };
 
+const createUserQuestionnaireUseCaseFactory = (repo: UserQuestionnaireRepository) => new UserQuestionnaireCreateUseCase(repo);
+export const createUserQuestionnaireUseProvider = {
+    provide: UserQuestionnaireCreateUseCase,
+    useFactory: createUserQuestionnaireUseCaseFactory,
+    deps: [UserQuestionnaireRepository],
+};
+
+const getUserQuestionnaireUseCaseFactory = (repo: UserQuestionnaireRepository) => new UserQuestionnaireGetUseCase(repo);
+export const getUserQuestionnaireUseProvider = {
+    provide: UserQuestionnaireGetUseCase,
+    useFactory: getUserQuestionnaireUseCaseFactory,
+    deps: [UserQuestionnaireRepository],
+};
+
 @NgModule({
     providers: [
         userLoginUseCaseProvider,
@@ -62,6 +80,9 @@ export const getRuleQuestionnaireByQuestIdUseProvider = {
         { provide: QuestionnaireRepository, useClass: QuestionnaireImplementationRepository },
         getRuleQuestionnaireByQuestIdUseProvider,
         { provide: RuleQuestionnaireRepository, useClass: RuleQuestionnaireImplementationRepository },
+        createUserQuestionnaireUseProvider,
+        getUserQuestionnaireUseProvider,
+        { provide: UserQuestionnaireRepository, useClass: UserQuestionnaireImplementationRepository },
     ],
     imports: [CommonModule, HttpClientModule],
 })

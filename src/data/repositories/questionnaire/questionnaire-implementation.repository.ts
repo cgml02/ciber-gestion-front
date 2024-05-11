@@ -19,9 +19,11 @@ export class QuestionnaireImplementationRepository extends QuestionnaireReposito
         super();
     }
 
-    getQuestionnaires(): Observable<QuestionnaireModel[]> {
+    getQuestionnaires(params: {
+        userId: string;
+    }): Observable<QuestionnaireModel[]> {
         return this.http
-            .get<QuestionnaireEntity[]>(`${environment.apiUrl}questionnaire`)
+            .get<QuestionnaireEntity[]>(`${environment.apiUrl}questionnaire/${params.userId}`)
             .pipe(map(this.questionnaireMapper.mapFrom));
     }
 }

@@ -52,18 +52,15 @@
         </tr>
       </thead>
       <tbody>
-        <tr
-          *ngFor="let rule of ruleQuestionnaires; let i = index"
-          id="user-list__table-item-{{ i }}"
-        >
-          <td>{{ rule.ruleQuestionnaireId }}</td>
-          <td>{{ rule.classification }}</td>
-          <td>100</td>
+        <tr *ngFor="let detail of userQuestionnaire?.classificationDetail; let i = index">
+          <td>{{ getDisplayIndex(i) }}</td>
+          <td>{{ detail.classification }}</td>
+          <td>{{ detail.score }}</td>
         </tr>
         <tr class="detailNPS">
           <td colspan="1"></td>
           <td>Total NPS</td>
-          <td>100</td>
+          <td>{{ userQuestionnaire?.totalNps }}</td>
         </tr>
       </tbody>
     </table>
@@ -95,22 +92,27 @@
           <td>
             <div class="row">
               <div class="col-6">
-                <select class="form-select" aria-label="Seleccionar">
+                <select
+                  class="form-select"
+                  aria-label="Seleccionar"
+                  [(ngModel)]="selectedNumber"
+                >
                   <option selected disabled>...</option>
-                  <option value="1">1</option>
-                  <option value="2">2</option>
-                  <option value="3">3</option>
-                  <option value="3">4</option>
-                  <option value="3">5</option>
-                  <option value="3">6</option>
-                  <option value="3">7</option>
-                  <option value="3">8</option>
-                  <option value="3">9</option>
-                  <option value="3">10</option>
+                  <option *ngFor="let number of numbers" [value]="number">
+                    {{ number }}
+                  </option>
                 </select>
               </div>
               <div class="col-6">
-                <button type="button" class="btn-lg">Enviar</button>
+                <button
+                  type="button"
+                  class="btn-lg"
+                  (click)="
+                    createUserQuestionnaire(questionnaire.questionnaireId)
+                  "
+                >
+                  Enviar
+                </button>
               </div>
             </div>
           </td>
