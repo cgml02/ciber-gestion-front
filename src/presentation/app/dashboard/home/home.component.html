@@ -111,7 +111,7 @@
                 <select
                   class="form-select"
                   aria-label="Seleccionar"
-                  [(ngModel)]="selectedNumber"
+                  [(ngModel)]="selectedNumber[i]"
                 >
                   <option selected disabled>...</option>
                   <option *ngFor="let number of numbers" [value]="number">
@@ -124,7 +124,7 @@
                   type="button"
                   class="btn-lg"
                   (click)="
-                    createUserQuestionnaire(questionnaire.questionnaireId)
+                    createUserQuestionnaire(questionnaire.questionnaireId, i)
                   "
                 >
                   Enviar

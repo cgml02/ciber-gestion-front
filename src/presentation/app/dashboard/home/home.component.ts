@@ -25,10 +25,11 @@ export class HomeComponent {
   userQuestionnaire: UserQuestionnaireClassificationModel | null | undefined;
 
   numbers: number[] = Array.from({ length: 10 }, (_, i) => i + 1);
-  selectedNumber: number = 0;
+  selectedNumber: number[] = [];
   userId: string = '';
   questionnaireId: number = 0;
   selectedQuestionnaireId: number | null = null;
+  selectValues: number[] = Array.from({ length: 10 }, (_, i) => i + 1);
 
   constructor(
     private authService: AuthService,
@@ -93,12 +94,12 @@ export class HomeComponent {
     );
   }
 
-  createUserQuestionnaire(questionnaireId: number): void {
+  createUserQuestionnaire(questionnaireId: number, index: number): void {
     if (this.isUserQuestionarie) {
       return;
     }
 
-    if (this.selectedNumber == 0) {
+    if (this.selectedNumber[index] == 0) {
       Swal.fire({
         icon: 'error',
         title: 'Debe escoger un número',
@@ -120,7 +121,7 @@ export class HomeComponent {
 
     this.userQuestionnaireService
       .execute({
-        score: Number(this.selectedNumber),
+        score: Number(this.selectedNumber[index]),
         userId: this.userId,
         questionnaireId,
       })
