@@ -41,7 +41,7 @@ export class ProfileGuard implements CanActivate {
                 Swal.fire({
                     icon: "error",
                     title: "Error al identificar el perfil del usuario",
-                    text: error.message || "Ocurrió un error durante la autenticación."
+                    text: error.error.message || "Ocurrió un error durante la autenticación."
                 });
                 this.logout();
                 return of(false);

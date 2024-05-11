@@ -7,13 +7,13 @@
       <section class="card-text">
         <h1>Registrarse <i class="bi bi-person-plus-fill"></i></h1>
         <h2>Regístrate a nuestro portal de NPS</h2>
-        <form [formGroup]="loginForm" (ngSubmit)="signUp()">
+        <form [formGroup]="signupForm" (ngSubmit)="signUp()">
           <div class="form-group">
-            <label for="login__email">Nombre(s):</label>
-            <input type="text" id="login__name" formControlName="name" />
+            <label for="signup__email">Nombre(s):</label>
+            <input type="text" id="signup__name" formControlName="name" />
             <div
               *ngIf="name?.invalid && (name?.dirty || name?.touched)"
-              id="login__name-error"
+              id="signup__name-error"
               class="error-message"
             >
               <div *ngIf="(name?.errors)!['required']">
@@ -25,17 +25,17 @@
             </div>
           </div>
           <div class="form-group">
-            <label for="login__email">Apellido(s):</label>
+            <label for="signup__email">Apellido(s):</label>
             <input
               type="text"
-              id="login__lastName"
+              id="signup__lastName"
               formControlName="lastName"
             />
             <div
               *ngIf="
                 lastName?.invalid && (lastName?.dirty || lastName?.touched)
               "
-              id="login__lastName-error"
+              id="signup__lastName-error"
               class="error-message"
             >
               <div *ngIf="(lastName?.errors)!['required']">
@@ -47,16 +47,16 @@
             </div>
           </div>
           <div class="form-group">
-            <label for="login__email">Email:</label>
+            <label for="signup__email">Email:</label>
             <input
               type="email"
-              id="login__email"
+              id="signup__email"
               formControlName="email"
               pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$"
             />
             <div
               *ngIf="email?.invalid && (email?.dirty || email?.touched)"
-              id="login__email-error"
+              id="signup__email-error"
               class="error-message"
             >
               <div *ngIf="(email?.errors)!['required']">
@@ -68,17 +68,17 @@
             </div>
           </div>
           <div class="form-group">
-            <label for="login__password">Contraseña:</label>
+            <label for="signup__password">Contraseña:</label>
             <input
               type="password"
-              id="login__password"
+              id="signup__password"
               formControlName="password"
             />
             <div
               *ngIf="
                 password?.invalid && (password?.dirty || password?.touched)
               "
-              id="login__password-error"
+              id="signup__password-error"
               class="error-message"
             >
               <div *ngIf="(password?.errors)!['required']">
@@ -90,10 +90,16 @@
             </div>
           </div>
           <h2>
-            ¿Ya tienes una cuenta? <a class="join" (click)="logIn()">Inicia sesión</a>
+            ¿Ya tienes una cuenta?
+            <a class="join" (click)="logIn()">Inicia sesión</a>
           </h2>
           <section class="card-actions">
-            <button type="submit" id="login__btn-login" (click)="signUp()">
+            <button
+              type="submit"
+              id="signup__btn-signup"
+              (click)="signUp()"
+              [disabled]="!signupForm.valid"
+            >
               Crear
             </button>
           </section>

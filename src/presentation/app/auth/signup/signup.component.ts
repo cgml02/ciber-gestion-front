@@ -20,7 +20,7 @@ export class SignupComponent implements OnInit {
         private userRegister: UserRegisterUseCase
     ) {}
 
-    loginForm = this.fb.group({
+    signupForm = this.fb.group({
         name: ["", [Validators.required, Validators.minLength(3)]],
         lastName: ["", [Validators.required, Validators.minLength(3)]],
         email: ["", [Validators.required, Validators.email]],
@@ -28,19 +28,19 @@ export class SignupComponent implements OnInit {
     });
 
     get name() {
-        return this.loginForm.get("name");
+        return this.signupForm.get("name");
     }
 
     get lastName() {
-        return this.loginForm.get("lastName");
+        return this.signupForm.get("lastName");
     }
 
     get email() {
-        return this.loginForm.get("email");
+        return this.signupForm.get("email");
     }
 
     get password() {
-        return this.loginForm.get("password");
+        return this.signupForm.get("password");
     }
 
     ngOnInit(): void {
@@ -74,8 +74,8 @@ export class SignupComponent implements OnInit {
                 .execute({
                     firstName, lastName, email, password
                 })
-                .subscribe(
-                    () => {
+                .subscribe({
+                    next: () => {
                         Swal.fire({
                             icon: "success",
                             title: "Registro exitoso",
@@ -85,18 +85,20 @@ export class SignupComponent implements OnInit {
                                 this.logIn();
                             }
                         });
+                        this.isSigningUp = false;
                     },
-                    (error) => {
+                    error: (error) => {
                         Swal.fire({
                             icon: "error",
                             title: "Error durante el registro de usuario",
-                            text:
-                error.message
-                || "Ha ocurrido un error durante el registro de usuario.",
+                            text: error.error.message || "Ha ocurrido un error durante el registro de usuario.",
                         });
+                        this.isSigningUp = false;
+                    },
+                    complete: () => {
+                        this.isSigningUp = false;
                     }
-                );
-            this.isSigningUp = false;
+                });
         } else {
             Swal.fire({
                 icon: "error",

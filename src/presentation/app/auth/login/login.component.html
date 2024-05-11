@@ -48,9 +48,17 @@
               </div>
             </div>
           </div>
-          <h2>¿No tienes una cuenta? <a class="join" (click)="signUp()">Regístrate</a></h2>
+          <h2>
+            ¿No tienes una cuenta?
+            <a class="join" (click)="signUp()">Regístrate</a>
+          </h2>
           <section class="card-actions">
-            <button type="submit" id="login__btn-login" (click)="logIn()">
+            <button
+              type="submit"
+              id="login__btn-login"
+              (click)="logIn()"
+              [disabled]="!loginForm.valid"
+            >
               Entrar
             </button>
           </section>
