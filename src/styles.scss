@@ -1,1 +1,39 @@
 /* You can add global styles to this file, and also import other style files */
+@import "../node_modules/h8k-design/lib/index.scss";
+@import "../node_modules/bootstrap-icons/font/bootstrap-icons.css";
+
+h1 {
+  font-weight: 200;
+  font-size: 25px;
+  text-align: center;
+}
+
+h2 {
+  font-weight: 100;
+  font-size: 15px;
+  text-align: center;
+  color: #006400;
+}
+
+a {
+  font-weight: 100;
+  font-size: 15px;
+  text-align: center;
+  color: #169c16;
+}
+
+a:hover {
+  color: #169c16;
+}
+
+body {
+  position: relative;
+  background: linear-gradient(rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.6)),
+    url("./presentation/assets/fondo.avif") !important;
+  background-size: cover;
+}
+
+.swal2-styled {
+  background-color: var(--brand-color) !important;
+  box-shadow: 0 4px 12px var(--brand-box-shadow);
+}

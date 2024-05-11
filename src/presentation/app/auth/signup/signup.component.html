@@ -1,0 +1,110 @@
+<div class="container">
+  <div class="centered-div">
+    <div class="alert error" *ngIf="isWrong">
+      Ya existe un usuario con ese email
+    </div>
+    <div class="card">
+      <section class="card-text">
+        <h1>Registrarse <i class="bi bi-person-plus-fill"></i></h1>
+        <h2>Regístrate a nuestro portal de NPS</h2>
+        <form [formGroup]="signupForm" (ngSubmit)="signUp()">
+          <div class="form-group">
+            <label for="signup__email">Nombre(s):</label>
+            <input type="text" id="signup__name" formControlName="name" />
+            <div
+              *ngIf="name?.invalid && (name?.dirty || name?.touched)"
+              id="signup__name-error"
+              class="error-message"
+            >
+              <div *ngIf="(name?.errors)!['required']">
+                El nombre es requerido.
+              </div>
+              <div *ngIf="(name?.errors)!['minlength']">
+                El mínimo de caracteres es de 3.
+              </div>
+            </div>
+          </div>
+          <div class="form-group">
+            <label for="signup__email">Apellido(s):</label>
+            <input
+              type="text"
+              id="signup__lastName"
+              formControlName="lastName"
+            />
+            <div
+              *ngIf="
+                lastName?.invalid && (lastName?.dirty || lastName?.touched)
+              "
+              id="signup__lastName-error"
+              class="error-message"
+            >
+              <div *ngIf="(lastName?.errors)!['required']">
+                El apellido es requerido.
+              </div>
+              <div *ngIf="(lastName?.errors)!['minlength']">
+                El mínimo de caracteres es de 3.
+              </div>
+            </div>
+          </div>
+          <div class="form-group">
+            <label for="signup__email">Email:</label>
+            <input
+              type="email"
+              id="signup__email"
+              formControlName="email"
+              pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$"
+            />
+            <div
+              *ngIf="email?.invalid && (email?.dirty || email?.touched)"
+              id="signup__email-error"
+              class="error-message"
+            >
+              <div *ngIf="(email?.errors)!['required']">
+                El email es requerido.
+              </div>
+              <div *ngIf="(email?.errors)!['email']">
+                El email no es válido.
+              </div>
+            </div>
+          </div>
+          <div class="form-group">
+            <label for="signup__password">Contraseña:</label>
+            <input
+              type="password"
+              id="signup__password"
+              formControlName="password"
+            />
+            <div
+              *ngIf="
+                password?.invalid && (password?.dirty || password?.touched)
+              "
+              id="signup__password-error"
+              class="error-message"
+            >
+              <div *ngIf="(password?.errors)!['required']">
+                La contraseña es requerida.
+              </div>
+              <div *ngIf="(password?.errors)!['minlength']">
+                El mínimo de caracteres es de 8.
+              </div>
+            </div>
+          </div>
+          <h2>
+            ¿Ya tienes una cuenta?
+            <a class="join" (click)="logIn()">Inicia sesión</a>
+          </h2>
+          <section class="card-actions">
+            <button
+              type="submit"
+              id="signup__btn-signup"
+              (click)="signUp()"
+              [disabled]="!signupForm.valid"
+            >
+              Crear
+            </button>
+          </section>
+        </form>
+      </section>
+    </div>
+  </div>
+</div>

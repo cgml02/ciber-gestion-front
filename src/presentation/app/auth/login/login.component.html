@@ -1,0 +1,69 @@
+<div class="container">
+  <div class="centered-div">
+    <div class="alert error" *ngIf="isWrong">
+      Email o contraseña incorrectos
+    </div>
+    <div class="card">
+      <section class="card-text">
+        <h1>Iniciar sesión <i class="bi bi-people-fill"></i></h1>
+        <h2>Ingresa a nuestro portal de NPS</h2>
+        <form [formGroup]="loginForm" (ngSubmit)="logIn()">
+          <div class="form-group">
+            <label for="login__email">Email:</label>
+            <input
+              type="email"
+              id="login__email"
+              formControlName="email"
+              pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$"
+            />
+            <div
+              *ngIf="email?.invalid && (email?.dirty || email?.touched)"
+              id="login__email-error"
+              class="error-message"
+            >
+              <div *ngIf="(email?.errors)!['required']">
+                El email es requerido.
+              </div>
+              <div *ngIf="(email?.errors)!['email']">
+                El email no es válido.
+              </div>
+            </div>
+          </div>
+          <div class="form-group">
+            <label for="login__password">Contraseña:</label>
+            <input
+              type="password"
+              id="login__password"
+              formControlName="password"
+            />
+            <div
+              *ngIf="
+                password?.invalid && (password?.dirty || password?.touched)
+              "
+              id="login__password-error"
+              class="error-message"
+            >
+              <div *ngIf="(password?.errors)!['required']">
+                La contraseña es requerida.
+              </div>
+            </div>
+          </div>
+          <h2>
+            ¿No tienes una cuenta?
+            <a class="join" (click)="signUp()">Regístrate</a>
+          </h2>
+          <section class="card-actions">
+            <button
+              type="submit"
+              id="login__btn-login"
+              (click)="logIn()"
+              [disabled]="!loginForm.valid"
+            >
+              Entrar
+            </button>
+          </section>
+        </form>
+      </section>
+    </div>
+  </div>
+</div>

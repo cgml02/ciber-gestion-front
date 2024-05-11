@@ -1,0 +1,139 @@
+<app-nav-bar></app-nav-bar>
+
+<div class="container" *ngIf="isAdmin">
+  <div class="card">
+    <h1>¡Bienvenido admin <i class="bi bi-person-fill-lock"></i>!</h1>
+    <h2>A continuación se mostrarán la encuestas creadas:</h2>
+
+    <table id="user-list__table">
+      <thead>
+        <tr>
+          <th>#</th>
+          <th>Nombre Cuestionario</th>
+          <th>Ver Detalle</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr
+          *ngFor="let questionnaire of questionnaires; let i = index"
+          id="user-list__table-item-{{ i }}"
+        >
+          <td>{{ questionnaire.questionnaireId }}</td>
+          <td>{{ questionnaire.name }}</td>
+          <td>
+            <button
+              type="button"
+              *ngIf="
+                !showDetail ||
+                selectedQuestionnaireId !== questionnaire.questionnaireId
+              "
+              class="btn-lg btn-block"
+              (click)="showDetailTable(questionnaire.questionnaireId)"
+            >
+              Ver <i class="bi bi-eye-fill"></i>
+            </button>
+            <button
+              type="button"
+              *ngIf="
+                showDetail &&
+                selectedQuestionnaireId === questionnaire.questionnaireId
+              "
+              class="btn-lg btn-block"
+              (click)="showDetailTable()"
+            >
+              Ocultar <i class="bi bi-eye-slash-fill"></i>
+            </button>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+
+    <h1 *ngIf="showDetail && isAdmin">
+      Detalle - Cuestionario #{{ this.selectedQuestionnaireId }}
+      <i class="bi bi-bookmarks-fill"></i>
+    </h1>
+
+    <!--Admin-->
+    <table *ngIf="showDetail && isAdmin" id="detail-table">
+      <thead>
+        <tr>
+          <th>#</th>
+          <th>Clasificación</th>
+          <th>Puntuación Total</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr
+          *ngFor="
+            let detail of userQuestionnaire?.classificationDetail;
+            let i = index
+          "
+        >
+          <td>{{ getDisplayIndex(i) }}</td>
+          <td>{{ detail.classification }}</td>
+          <td>{{ detail.score }}</td>
+        </tr>
+        <tr class="detailNPS">
+          <td colspan="1"></td>
+          <td>Total NPS</td>
+          <td>{{ userQuestionnaire?.totalNps | number : '1.2-2' }}</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+
+<div class="container" *ngIf="!isAdmin">
+  <div class="card">
+    <h1>¡Bienvenido!</h1>
+    <h2>A continuación se mostrarán la encuestas pendientes por responder:</h2>
+
+    <table id="user-list__table">
+      <thead>
+        <tr>
+          <th>#</th>
+          <th>Nombre Cuestionario</th>
+          <th>Pregunta</th>
+          <th>Calificar</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr
+          *ngFor="let questionnaire of questionnaires; let i = index"
+          id="user-list__table-item-{{ i }}"
+        >
+          <td>{{ questionnaire.questionnaireId }}</td>
+          <td>{{ questionnaire.name }}</td>
+          <td>{{ questionnaire.question }}</td>
+          <td>
+            <div class="row">
+              <div class="col-6">
+                <select
+                  class="form-select"
+                  aria-label="Seleccionar"
+                  [(ngModel)]="selectedNumber[i]"
+                >
+                  <option selected disabled>...</option>
+                  <option *ngFor="let number of numbers" [value]="number">
+                    {{ number }}
+                  </option>
+                </select>
+              </div>
+              <div class="col-6">
+                <button
+                  type="button"
+                  class="btn-lg"
+                  (click)="
+                    createUserQuestionnaire(questionnaire.questionnaireId, i)
+                  "
+                >
+                  Enviar
+                </button>
+              </div>
+            </div>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>
