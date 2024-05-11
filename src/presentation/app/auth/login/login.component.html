@@ -5,7 +5,7 @@
     </div>
     <div class="card">
       <section class="card-text">
-        <h1>Iniciar sesión</h1>
+        <h1>Iniciar sesión <i class="bi bi-people-fill"></i></h1>
         <h2>Ingresa a nuestro portal de NPS</h2>
         <form [formGroup]="loginForm" (ngSubmit)="logIn()">
           <div class="form-group">
@@ -48,7 +48,7 @@
               </div>
             </div>
           </div>
-          <h2>¿No tienes una cuenta? <a (click)="signUp()">Regístrate.</a></h2>
+          <h2>¿No tienes una cuenta? <a class="join" (click)="signUp()">Regístrate</a></h2>
           <section class="card-actions">
             <button type="submit" id="login__btn-login" (click)="logIn()">
               Entrar

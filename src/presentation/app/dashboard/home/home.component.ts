@@ -27,6 +27,7 @@ export class HomeComponent {
     selectedNumber: number = 0;
     userId: string = '';
     questionnaireId: number = 0;
+    selectedQuestionnaireId: number | null = null;
 
     constructor(
         private authService: AuthService,
@@ -47,10 +48,13 @@ export class HomeComponent {
     }
 
     showDetailTable(questionnaireId?: number): void {
-        this.showDetail = !this.showDetail;
-
-        if (questionnaireId && questionnaireId !== 0) {
+        if (questionnaireId !== undefined) {
+            this.showDetail = true;
+            this.selectedQuestionnaireId = questionnaireId;
             this.getUserQuestionnaire(questionnaireId);
+        } else {
+            this.showDetail = false;
+            this.selectedQuestionnaireId = null;
         }
     }
 
@@ -155,6 +159,6 @@ export class HomeComponent {
     }
 
     getDisplayIndex(index: number): number {
-        return index === 0 ? index + 1 : index;
+        return index + 1;
     }
 }

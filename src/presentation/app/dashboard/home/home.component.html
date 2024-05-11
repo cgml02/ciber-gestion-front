@@ -2,7 +2,7 @@
 
 <div class="container" *ngIf="isAdmin">
   <div class="card">
-    <h1>¡Bienvenido admin!</h1>
+    <h1>¡Bienvenido admin <i class="bi bi-person-fill-lock"></i>!</h1>
     <h2>A continuación se mostrarán la encuestas creadas:</h2>
 
     <table id="user-list__table">
@@ -23,24 +23,35 @@
           <td>
             <button
               type="button"
-              *ngIf="!showDetail"
+              *ngIf="
+                !showDetail ||
+                selectedQuestionnaireId !== questionnaire.questionnaireId
+              "
               class="btn-lg btn-block"
               (click)="showDetailTable(questionnaire.questionnaireId)"
             >
-              Ver
+              Ver <i class="bi bi-eye-fill"></i>
             </button>
             <button
               type="button"
-              *ngIf="showDetail"
+              *ngIf="
+                showDetail &&
+                selectedQuestionnaireId === questionnaire.questionnaireId
+              "
               class="btn-lg btn-block"
               (click)="showDetailTable()"
             >
-              Ocultar
+              Ocultar <i class="bi bi-eye-slash-fill"></i>
             </button>
           </td>
         </tr>
       </tbody>
     </table>
+
+    <h1 *ngIf="showDetail && isAdmin">
+      Detalle - Cuestionario #{{ this.selectedQuestionnaireId }}
+      <i class="bi bi-bookmarks-fill"></i>
+    </h1>
 
     <!--Admin-->
     <table *ngIf="showDetail && isAdmin" id="detail-table">
@@ -52,7 +63,12 @@
         </tr>
       </thead>
       <tbody>
-        <tr *ngFor="let detail of userQuestionnaire?.classificationDetail; let i = index">
+        <tr
+          *ngFor="
+            let detail of userQuestionnaire?.classificationDetail;
+            let i = index
+          "
+        >
           <td>{{ getDisplayIndex(i) }}</td>
           <td>{{ detail.classification }}</td>
           <td>{{ detail.score }}</td>
